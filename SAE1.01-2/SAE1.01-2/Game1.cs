@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Content;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Sprites;
+using MonoGame.Extended;
+
 
 namespace SAE1._01_2
 {
@@ -14,7 +16,7 @@ namespace SAE1._01_2
         private Vector2 _persoPosition;
         private AnimatedSprite _perso;
         private int _vitessePerso;
-
+        private Camera camera;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -29,6 +31,7 @@ namespace SAE1._01_2
             base.Initialize();
             _persoPosition = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
             _vitessePerso = 220;
+            camera = new Camera();
         }
 
         protected override void LoadContent()
@@ -38,7 +41,7 @@ namespace SAE1._01_2
             // TODO: use this.Content to load your game content here
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             // spritesheet
-            SpriteSheet spriteSheet = Content.Load<SpriteSheet>("perso/tiled-perso-rouge.sf", new JsonContentLoader());
+            SpriteSheet spriteSheet = Content.Load<SpriteSheet>("perso/tiled-perso-jaune.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(spriteSheet);
         }
 
@@ -61,7 +64,7 @@ namespace SAE1._01_2
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Red);
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
