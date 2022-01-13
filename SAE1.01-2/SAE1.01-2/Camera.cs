@@ -1,53 +1,24 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SAE1._01_2
 {
-    public class Camera
+    class Camera
     {
-        #region Fields
+        public Matrix Transform { get; private set; }
 
-        public float zoom { get; set; } //zoom ratio
-        public Matrix transform { get; set; } //transform matrix
-        protected Vector2 position;     //camera's position
-        public int leftRectrict { get; private set; }   //restrict to go left
-        #endregion
-
-        #region Properties
-
-        #endregion
-
-        #region Constructor
-
-        public Camera()
+        public void Follow(Vector2 target)
         {
-            zoom = 2.0f;        //zoom 2
-            position = Vector2.Zero; //begin at begin of map
-            leftRectrict = 0;   //restrict left at 0
-        }
-        public Vector2 Position
-        {
-            get { return position; }
-            set { position = value; }
-        }
-        #endregion
+            var position = Matrix.CreateTranslation(
+              -target.X,
+              -target.Y,
+              0);
 
-        #region Methods
-        public void updateLookPosition(Rectangle perso)
-        {
-            //position.X = perso.Left - Constants.viewWidth / (2 * zoom);     //make sure mario in the center
-            position.Y = 0; //camera only move horizontal
-            if (position.X <= leftRectrict) position.X = leftRectrict;  //prevent camera from go left
-            leftRectrict = (int)position.X; //update restrict
-        }
-        public void Update()
-        {
-            transform = Matrix.CreateTranslation(-position.X, -position.Y, 0) *     //translation matrix
-                            Matrix.CreateScale(new Vector3(zoom, zoom, 1)); //scale matrix
-        }
+            var offset = Matrix.CreateTranslation(
+                Game1.ScreenWidth / 2,
+                Game1.ScreenHeight / 2,
+                0);
 
-        #endregion
+            Transform = position * offset;
+        }
     }
 }
