@@ -2,12 +2,18 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Content;
+using MonoGame.Extended.Screens;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Sprites;
 using MonoGame.Extended.TextureAtlases;
+using System;
 
 namespace SAE1._01_2
 {
+
+
+    public enum Ecran { Accueil, Jeu, ChoixPerso};
+    public enum TypeAnimation { walkWest, walkEast, idle};
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
@@ -22,6 +28,61 @@ namespace SAE1._01_2
         private bool hasJumped;
         public static int ScreenHeight;
         public static int ScreenWidth;
+
+        private Random _rd;
+
+
+        private readonly ScreenManager _screenManager;
+
+
+
+        public SpriteBatch SpriteBatch
+        {
+            get
+            {
+                return this._spriteBatch;
+            }
+
+            set
+            {
+                this._spriteBatch = value;
+            }
+        }
+
+
+
+        public AnimatedSprite Perso
+        {
+            get
+            {
+                return this._perso;
+            }
+
+            set
+            {
+                this._perso = value;
+            }
+        }
+
+
+
+        public Vector2 PersoPosition
+        {
+            get
+            {
+                return this._persoPosition;
+            }
+
+            set
+            {
+                this._persoPosition = value;
+            }
+        }
+
+
+
+
+
 
         public Game1()
         {
@@ -45,6 +106,7 @@ namespace SAE1._01_2
             _persoPosition = new Vector2(31700, 810);
             _vitessePerso = 220;
             hasJumped = true;
+
             base.Initialize();
         }
 
@@ -52,7 +114,6 @@ namespace SAE1._01_2
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _camera = new Camera();
-            //_mvmCam = new CamMovement(Content.Load<Texture2D>("cam"));
             _bg = Content.Load<Texture2D>("background/bg2");
             SpriteSheet spriteSheet = Content.Load<SpriteSheet>("perso/tiled-perso-rouge.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(spriteSheet);
@@ -66,30 +127,33 @@ namespace SAE1._01_2
             string animation = "idle";
             float deltaSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds; // DeltaTime
             float walkSpeed = deltaSeconds * _vitessePerso; // Vitesse de déplacement du sprite
-            KeyboardState keyboardState = Keyboard.GetState();
+            KeyboardState kState = Keyboard.GetState();
 
             _persoPosition += velocity;
 
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            if (kState.IsKeyDown(Keys.A) || kState.IsKeyDown(Keys.Q))
             {
                 velocity.X -= 3f;
                 animation = "walkWest";
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.D))
+            else if (kState.IsKeyDown(Keys.D))
+            {
                 velocity.X += 3f;
+                animation = "walkWest";
+            }
             else
                 velocity.X = 0f;
 
-            if (Keyboard.GetState().IsKeyDown(Keys.W) && hasJumped == false)
+            if ((kState.IsKeyDown(Keys.W) || kState.IsKeyDown(Keys.Space)) && hasJumped == false)
             {
-                _persoPosition.Y -= 50f;
-                velocity.Y = -11f;
+                _persoPosition.Y -= 20f;
+                velocity.Y = -30f;
                 hasJumped = true;
             }
             if (hasJumped == true)
             {
                 float i = 1;
-                velocity.Y += 0.15f * i;
+                velocity.Y += 1f * i;
             }
 
             if (_persoPosition.Y + 170 >= 980)
@@ -98,7 +162,8 @@ namespace SAE1._01_2
             if (hasJumped == false)
                 velocity.Y = 0f;
             _camPosition.X -= 10f; //deplacement de la caméra
-            _camera.Follow(_camPosition);
+            if(_camPosition.X>950)
+                _camera.Follow(_camPosition);
             _perso.Play(animation);
             _perso.Update(deltaSeconds);
             // TODO: Add your update logic here
