@@ -5,11 +5,11 @@ using MonoGame.Extended.Content;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Sprites;
 using MonoGame.Extended.TextureAtlases;
+using System;
 
 namespace SAE1._01_2
 {
-    public class Game1 : Game
-    {
+    public class Game1 : Game {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Camera _camera;
@@ -23,8 +23,10 @@ namespace SAE1._01_2
         public static int ScreenHeight;
         public static int ScreenWidth;
 
-        public Game1()
-        {
+        public int playerColor = 2;
+        public int direction = 0;
+
+        public Game1() {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
@@ -33,8 +35,7 @@ namespace SAE1._01_2
 
         }
 
-        protected override void Initialize()
-        {
+        protected override void Initialize() {
             // TODO: Add your initialization logic here
             _graphics.PreferredBackBufferHeight = 1000;
             _graphics.PreferredBackBufferWidth = 1920;
@@ -48,46 +49,46 @@ namespace SAE1._01_2
             base.Initialize();
         }
 
-        protected override void LoadContent()
-        {
+        protected override void LoadContent() {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _camera = new Camera();
             //_mvmCam = new CamMovement(Content.Load<Texture2D>("cam"));
             _bg = Content.Load<Texture2D>("background/bg2");
-            SpriteSheet spriteSheet = Content.Load<SpriteSheet>("perso/tiled-perso-rouge.sf", new JsonContentLoader());
+            SpriteSheet spriteSheet = Content.Load<SpriteSheet>(".\\tiled-perso-allside.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(spriteSheet);
             // TODO: use this.Content to load your game content here
         }
 
-        protected override void Update(GameTime gameTime)
-        {
+        protected override void Update(GameTime gameTime) {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            string animation = "idle";
+            String animation = $"{ChoixCouleur(playerColor)}_{DirectionPlayer(direction)}_idle";
             float deltaSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds; // DeltaTime
             float walkSpeed = deltaSeconds * _vitessePerso; // Vitesse de déplacement du sprite
             KeyboardState keyboardState = Keyboard.GetState();
 
             _persoPosition += velocity;
 
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
-            {
+            if (Keyboard.GetState().IsKeyDown(Keys.Q)) {
                 velocity.X -= 3f;
-                animation = "walkWest";
+                animation = $"{ChoixCouleur(playerColor)}_{DirectionPlayer(direction)}_walk";
+                direction = 0;
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.D))
+            else if (Keyboard.GetState().IsKeyDown(Keys.D)) {
                 velocity.X += 3f;
+                animation = $"{ChoixCouleur(playerColor)}_{DirectionPlayer(direction)}_walk";
+                direction = 1;
+            }
+
             else
                 velocity.X = 0f;
 
-            if (Keyboard.GetState().IsKeyDown(Keys.W) && hasJumped == false)
-            {
-                _persoPosition.Y -= 50f;
+            if (Keyboard.GetState().IsKeyDown(Keys.Space) && hasJumped == false) {
+                _persoPosition.Y -= 20f;
                 velocity.Y = -11f;
                 hasJumped = true;
             }
-            if (hasJumped == true)
-            {
+            if (hasJumped == true) {
                 float i = 1;
                 velocity.Y += 0.15f * i;
             }
@@ -106,8 +107,7 @@ namespace SAE1._01_2
             base.Update(gameTime);
         }
 
-        protected override void Draw(GameTime gameTime)
-        {
+        protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin(transformMatrix: _camera.Transform);
             _spriteBatch.Draw(_bg, new Vector2(0, 0), Color.White);
@@ -116,5 +116,33 @@ namespace SAE1._01_2
             _spriteBatch.End();
             base.Draw(gameTime);
         }
+
+        public static String ChoixCouleur(int choix) {
+            String couleur = "";
+            if(choix == 0) {
+                couleur = "red";
+            }
+            else if(choix == 1) {
+                couleur = "blue";
+            }
+            else if (choix == 2) {
+                couleur = "green";
+            }
+            else if (choix == 3) {
+                couleur = "yellow";
+            }
+            return couleur;
+        }
+
+        public static String DirectionPlayer(int direction) {
+            String view = "";
+            if (direction == 1) {
+                view = "Left";
+            }
+            else
+                view = "Right";
+            return view;
+        }
+
     }
 }
