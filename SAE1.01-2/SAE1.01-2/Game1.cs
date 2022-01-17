@@ -23,16 +23,15 @@ namespace SAE1._01_2
         public static int ScreenHeight;
         public static int ScreenWidth;
 
-        public int playerColor = 2;
+        public int playerColor = 1;
         public int direction = 0;
+        public String CouleurJoueur;
 
         public Game1() {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             _graphics.IsFullScreen = false;
-
-
         }
 
         protected override void Initialize() {
@@ -45,6 +44,7 @@ namespace SAE1._01_2
             _camPosition = new Vector2(30900, 520);
             _persoPosition = new Vector2(31700, 810);
             _vitessePerso = 220;
+            CouleurJoueur = ChoixCouleur(playerColor);
             hasJumped = true;
             base.Initialize();
         }
@@ -62,7 +62,7 @@ namespace SAE1._01_2
         protected override void Update(GameTime gameTime) {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            String animation = $"{ChoixCouleur(playerColor)}_{DirectionPlayer(direction)}_idle";
+            String animation = $"{CouleurJoueur}_{DirectionPlayer(direction)}_idle";
             float deltaSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds; // DeltaTime
             float walkSpeed = deltaSeconds * _vitessePerso; // Vitesse de déplacement du sprite
             KeyboardState keyboardState = Keyboard.GetState();
@@ -71,12 +71,12 @@ namespace SAE1._01_2
 
             if (Keyboard.GetState().IsKeyDown(Keys.Q)) {
                 velocity.X -= 3f;
-                animation = $"{ChoixCouleur(playerColor)}_{DirectionPlayer(direction)}_walk";
+                animation = $"{CouleurJoueur}_{DirectionPlayer(direction)}_walk";
                 direction = 0;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.D)) {
                 velocity.X += 3f;
-                animation = $"{ChoixCouleur(playerColor)}_{DirectionPlayer(direction)}_walk";
+                animation = $"{CouleurJoueur}_{DirectionPlayer(direction)}_walk";
                 direction = 1;
             }
 
