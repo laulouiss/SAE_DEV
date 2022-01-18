@@ -1,89 +1,43 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
+using MonoGame.Extended;
 using MonoGame.Extended.Content;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Sprites;
 using MonoGame.Extended.TextureAtlases;
+using MonoGame.Extended.Tiled;
+using MonoGame.Extended.Tiled.Renderers;
+using MonoGame.Extended.ViewportAdapters;
+using SAE1._01_2.Core;
 using System;
+using System.Collections.Generic;
 
 namespace SAE1._01_2
 {
 
 
-    public enum Ecran { Accueil, Jeu, ChoixPerso};
-    public enum TypeAnimation { walkWest, walkEast, idle};
+    public enum Ecran { Accueil, Jeu, ChoixPerso };
+    public enum TypeAnimation { walkWest, walkEast, idle };
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
         private Camera _camera;
-        private AnimatedSprite _perso;
-        private Vector2 _persoPosition;
+        private SpriteBatch _spriteBatch;
         private Vector2 _camPosition;
-        private Vector2 velocity;
-        private Texture2D _bg;
-        private int _vitessePerso;
-        private bool hasJumped;
-        public static int ScreenHeight;
-        public static int ScreenWidth;
-
-        private Random _rd;
-
-
-        private readonly ScreenManager _screenManager;
-
-
-
-        public SpriteBatch SpriteBatch
-        {
-            get
-            {
-                return this._spriteBatch;
-            }
-
-            set
-            {
-                this._spriteBatch = value;
-            }
-        }
-
-
-
-        public AnimatedSprite Perso
-        {
-            get
-            {
-                return this._perso;
-            }
-
-            set
-            {
-                this._perso = value;
-            }
-        }
-
-
-
-        public Vector2 PersoPosition
-        {
-            get
-            {
-                return this._persoPosition;
-            }
-
-            set
-            {
-                this._persoPosition = value;
-            }
-        }
-
-
-
-
-
-
+        private Vector2 _persoPosition;
+        private TiledMap _tiledMap;
+        private TiledMapRenderer _tiledMapRenderer;
+        public bool hasJumped;
+        public Vector2 velocity;
+        public int _vitessePerso;
+        public KeyboardState kState = Keyboard.GetState();
+        private Song _song;
+        private SoundEffect _jumpEffect;
+        private AnimatedSprite _persoRouge;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -97,16 +51,12 @@ namespace SAE1._01_2
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            _graphics.PreferredBackBufferHeight = 1000;
-            _graphics.PreferredBackBufferWidth = 1920;
+            _graphics.PreferredBackBufferHeight = Constant.SCREEN_HEIGHT;
+            _graphics.PreferredBackBufferWidth = Constant.SCREEN_WIDTH;
             _graphics.ApplyChanges();
-            ScreenHeight = _graphics.PreferredBackBufferHeight;
-            ScreenWidth = _graphics.PreferredBackBufferWidth;
-            _camPosition = new Vector2(30900, 520);
-            _persoPosition = new Vector2(31700, 810);
-            _vitessePerso = 220;
-            hasJumped = true;
-
+            _camPosition = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
+            _persoPosition = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
+            //_persoPosition = new Vector2(Constant.POS_PERSO_X, Constant.POS_PERSO_Y);
             base.Initialize();
         }
 
@@ -114,69 +64,77 @@ namespace SAE1._01_2
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _camera = new Camera();
-            _bg = Content.Load<Texture2D>("background/bg2");
-            SpriteSheet spriteSheet = Content.Load<SpriteSheet>("perso/tiled-perso-rouge.sf", new JsonContentLoader());
-            _perso = new AnimatedSprite(spriteSheet);
+            SpriteSheet perso_rouge = Content.Load<SpriteSheet>("perso/tiled-perso-rouge.sf", new JsonContentLoader());
+            _persoRouge = new AnimatedSprite(perso_rouge);
+            _tiledMap = Content.Load<TiledMap>("background/map");
+            _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
+            this._song = Content.Load<Song>("Sound/Powerup");
+            _jumpEffect = Content.Load<SoundEffect>("Sound/jump");
+            MediaPlayer.Play(_song);
             // TODO: use this.Content to load your game content here
         }
-
+        
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
             string animation = "idle";
             float deltaSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds; // DeltaTime
             float walkSpeed = deltaSeconds * _vitessePerso; // Vitesse de déplacement du sprite
-            KeyboardState kState = Keyboard.GetState();
+            //KeyboardState kState = Keyboard.GetState();
+            //_persoPosition += velocity;
 
-            _persoPosition += velocity;
+            //if (kState.IsKeyDown(Keys.A) || kState.IsKeyDown(Keys.Q))
+            //{
+            //    velocity.X -= 3f;
+            //    animation = "walkWest";
+            //}
+            //else if (kState.IsKeyDown(Keys.D))
+            //{
+            //    velocity.X += 3f;
+            //    animation = "walkWest";
+            //}
+            //else
+            //    velocity.X = 0f;
+            //if ((kState.IsKeyDown(Keys.W) || kState.IsKeyDown(Keys.Space)) && hasJumped == false)
+            //{
+            //    _persoPosition.Y -= 20f;
+            //    velocity.Y = -30f;
+            //    _jumpEffect.Play();
+            //    hasJumped = true;
+            //}
 
-            if (kState.IsKeyDown(Keys.A) || kState.IsKeyDown(Keys.Q))
-            {
-                velocity.X -= 3f;
-                animation = "walkWest";
-            }
-            else if (kState.IsKeyDown(Keys.D))
-            {
-                velocity.X += 3f;
-                animation = "walkWest";
-            }
-            else
-                velocity.X = 0f;
+            //if (hasJumped == true)
+            //{
+            //    float i = 1;
+            //    velocity.Y += 1f * i;
+            //}
 
-            if ((kState.IsKeyDown(Keys.W) || kState.IsKeyDown(Keys.Space)) && hasJumped == false)
-            {
-                _persoPosition.Y -= 20f;
-                velocity.Y = -30f;
-                hasJumped = true;
-            }
-            if (hasJumped == true)
-            {
-                float i = 1;
-                velocity.Y += 1f * i;
-            }
+            //if (_persoPosition.Y + Constant.PERSO_HEIGHT >= Constant.POSITION_SOL)
+            //    hasJumped = false;
 
-            if (_persoPosition.Y + 170 >= 980)
-                hasJumped = false;
+            //if (hasJumped == false)
+            //    velocity.Y = 0f;
 
-            if (hasJumped == false)
-                velocity.Y = 0f;
-            _camPosition.X -= 10f; //deplacement de la caméra
-            if(_camPosition.X>950)
-                _camera.Follow(_camPosition);
-            _perso.Play(animation);
-            _perso.Update(deltaSeconds);
+            _camPosition.X -= 20f; //deplacement de la caméra
+            _camera.Follow(_camPosition);
+            _persoRouge.Play(animation);
+            _persoRouge.Update(deltaSeconds);
+            _tiledMapRenderer.Update(gameTime);
             // TODO: Add your update logic here
 
             base.Update(gameTime);
         }
-
+       
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            _spriteBatch.Begin(transformMatrix: _camera.Transform);
-            _spriteBatch.Draw(_bg, new Vector2(0, 0), Color.White);
-            _spriteBatch.Draw(_perso, _persoPosition);
+            _spriteBatch.Begin();
+            _tiledMapRenderer.Draw();
+            _spriteBatch.End();
+            _spriteBatch.Begin(transformMatrix:_camera.Transform);
+            _spriteBatch.Draw(_persoRouge, _persoPosition);
             // TODO: Add your drawing code here
             _spriteBatch.End();
             base.Draw(gameTime);

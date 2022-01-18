@@ -18,6 +18,23 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin background/bg.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:background/bg.jpg
+
+#begin background/bg.tsx
+/importer:TiledMapTilesetImporter
+/processor:TiledMapTilesetProcessor
+/build:background/bg.tsx
+
 #begin background/bg2.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -29,6 +46,35 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:background/bg2.jpg
+
+#begin background/map.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:background/map.tmx
+
+#begin background/tiled.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:background/tiled.png
+
+#begin cam.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:cam.png
 
 #begin décor/2little_rock_uganda.png
 /importer:TextureImporter
@@ -114,6 +160,18 @@
 /processorParam:TextureFormat=Color
 /build:décor/single_spike.png
 
+#begin décor/tiled.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:décor/tiled.png
+
 #begin Font.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -168,4 +226,22 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:perso/tiled-perso-vert.png
+
+#begin Sound/jump.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sound/jump.mp3
+
+#begin Sound/jump.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/jump.wav
+
+#begin Sound/Powerup.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sound/Powerup.mp3
 
