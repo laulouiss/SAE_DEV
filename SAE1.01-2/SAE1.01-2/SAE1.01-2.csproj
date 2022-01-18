@@ -31,16 +31,7 @@
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641" />
   </ItemGroup>
     <ItemGroup>
-		<None Update="Content\perso\tiled-perso-bleu.sf">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-		<None Update="Content\perso\tiled-perso-jaune.sf">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-		<None Update="Content\perso\tiled-perso-rouge.sf">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-		<None Update="Content\perso\tiled-perso-vert.sf">
+		<None Update="Content\tiled-perso-allside.sf">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>

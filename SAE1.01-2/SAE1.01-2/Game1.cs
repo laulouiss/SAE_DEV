@@ -10,8 +10,6 @@ using System;
 
 namespace SAE1._01_2
 {
-
-
     public enum Ecran { Accueil, Jeu, ChoixPerso};
     public enum TypeAnimation { walkWest, walkEast, idle};
     public class Game1 : Game
@@ -29,12 +27,14 @@ namespace SAE1._01_2
         public static int ScreenHeight;
         public static int ScreenWidth;
 
+        public int CouleurPlayer = 0;
+        public String CouleurPerso;
+
+        public int direction = 0;
+
         private Random _rd;
 
-
         private readonly ScreenManager _screenManager;
-
-
 
         public SpriteBatch SpriteBatch
         {
@@ -49,8 +49,6 @@ namespace SAE1._01_2
             }
         }
 
-
-
         public AnimatedSprite Perso
         {
             get
@@ -63,8 +61,6 @@ namespace SAE1._01_2
                 this._perso = value;
             }
         }
-
-
 
         public Vector2 PersoPosition
         {
@@ -79,19 +75,12 @@ namespace SAE1._01_2
             }
         }
 
-
-
-
-
-
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             _graphics.IsFullScreen = false;
-
-
         }
 
         protected override void Initialize()
@@ -106,7 +95,7 @@ namespace SAE1._01_2
             _persoPosition = new Vector2(31700, 810);
             _vitessePerso = 220;
             hasJumped = true;
-
+            CouleurPerso = ChoixCouleur(CouleurPlayer);
             base.Initialize();
         }
 
@@ -115,7 +104,7 @@ namespace SAE1._01_2
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _camera = new Camera();
             _bg = Content.Load<Texture2D>("background/bg2");
-            SpriteSheet spriteSheet = Content.Load<SpriteSheet>("perso/tiled-perso-rouge.sf", new JsonContentLoader());
+            SpriteSheet spriteSheet = Content.Load<SpriteSheet>("tiled-perso-allside.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(spriteSheet);
             // TODO: use this.Content to load your game content here
         }
@@ -124,7 +113,7 @@ namespace SAE1._01_2
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            string animation = "idle";
+            string animation = $"{CouleurPerso}_{ChoixDirection(direction)}_idle";
             float deltaSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds; // DeltaTime
             float walkSpeed = deltaSeconds * _vitessePerso; // Vitesse de déplacement du sprite
             KeyboardState kState = Keyboard.GetState();
@@ -134,17 +123,19 @@ namespace SAE1._01_2
             if (kState.IsKeyDown(Keys.A) || kState.IsKeyDown(Keys.Q))
             {
                 velocity.X -= 3f;
-                animation = "walkWest";
+                animation = $"{CouleurPerso}_{ChoixDirection(direction)}_walk";
+                direction = 1;
             }
             else if (kState.IsKeyDown(Keys.D))
             {
                 velocity.X += 3f;
-                animation = "walkWest";
+                animation = $"{CouleurPerso}_{ChoixDirection(direction)}_walk";
+                direction = 0;
             }
             else
                 velocity.X = 0f;
 
-            if ((kState.IsKeyDown(Keys.W) || kState.IsKeyDown(Keys.Space)) && hasJumped == false)
+            if ((kState.IsKeyDown(Keys.W) || kState.IsKeyDown(Keys.Z) || kState.IsKeyDown(Keys.Space)) && hasJumped == false)
             {
                 _persoPosition.Y -= 20f;
                 velocity.Y = -30f;
@@ -180,6 +171,36 @@ namespace SAE1._01_2
             // TODO: Add your drawing code here
             _spriteBatch.End();
             base.Draw(gameTime);
+        }
+
+
+        public static String ChoixCouleur(int choix) {
+            String couleur = "";
+            switch (choix) {
+                case 0:
+                    couleur = "red";
+                    break;
+                case 1:
+                    couleur = "blue";
+                    break;
+                case 2:
+                    couleur = "green";
+                    break;
+                case 3:
+                    couleur = "yellow";
+                    break;
+            }
+            return couleur;
+        }
+
+        public static String ChoixDirection(int choix) {
+            String direction = "";
+            if (choix == 0) {
+                direction = "Left";
+            }
+            else
+                direction = "Right";
+            return direction;
         }
     }
 }
