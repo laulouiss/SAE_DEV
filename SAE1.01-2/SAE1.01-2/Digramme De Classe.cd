@@ -1,27 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="SAE1._01_2.Core.Camera">
-    <Position X="7.75" Y="1.5" Width="1.5" />
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="SAE1._01_2.Core.Camera" Collapsed="true">
+    <Position X="7.5" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAE=</HashCode>
       <FileName>Core\Camera.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SAE1._01_2.Constant">
-    <Position X="9.5" Y="1" Width="1.5" />
+  <Class Name="SAE1._01_2.Constant" Collapsed="true">
+    <Position X="7.5" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EAAAAAAgAAAAAAgAAAIAAQAgCAAAACAAAAAAAAAAAAg=</HashCode>
       <FileName>Core\Constant.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SAE1._01_2.Core.ChoixPerso">
-    <Position X="11.75" Y="1.25" Width="1.5" />
+  <Class Name="SAE1._01_2.Core.ChoixPerso" Collapsed="true">
+    <Position X="5.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AEAAAAACAABAIAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Core\ChoixPerso.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SAE1._01_2.Core.Player">
+  <Class Name="SAE1._01_2.Core.Player" Collapsed="true">
     <Position X="5.75" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAQgAAAAAAAAAwAAAAAACAAAAAAAAAAAAIQAAAAAAAQ=</HashCode>
@@ -29,9 +29,9 @@
     </TypeIdentifier>
   </Class>
   <Class Name="SAE1._01_2.FuryFlash">
-    <Position X="3.75" Y="1" Width="1.5" />
+    <Position X="2" Y="2" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>IIQAAAAAAAAAIwAAEAIAIAAAABBAAAACQIQAACgAAAQ=</HashCode>
+      <HashCode>IAQAAAAAAAAAIwAAAAIAIAAAAABAAAACAIQAACgAAAQ=</HashCode>
       <FileName>FuryFlash.cs</FileName>
     </TypeIdentifier>
   </Class>
