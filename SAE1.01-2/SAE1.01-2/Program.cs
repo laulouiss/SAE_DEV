@@ -7,7 +7,7 @@ namespace SAE1._01_2
         [STAThread]
         static void Main()
         {
-            using (var game = new Game1())
+            using (var game = new FuryFlash())
                 game.Run();
         }
     }

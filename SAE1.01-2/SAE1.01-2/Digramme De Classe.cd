@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SAE1._01_2.Core.Camera">
+    <Position X="7.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Core\Camera.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SAE1._01_2.Constant">
+    <Position X="9.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAgAAAAAAgAAAIAAQAgCAAAACAAAAAAAAAAAAg=</HashCode>
+      <FileName>Core\Constant.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SAE1._01_2.Core.ChoixPerso">
+    <Position X="11.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAACAABAIAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\ChoixPerso.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SAE1._01_2.Core.Player">
+    <Position X="5.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQgAAAAAAAAAwAAAAAACAAAAAAAAAAAAIQAAAAAAAQ=</HashCode>
+      <FileName>Core\Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

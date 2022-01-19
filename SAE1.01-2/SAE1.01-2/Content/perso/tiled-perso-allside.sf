@@ -1,0 +1,89 @@
+{
+  "textureAtlas": {
+    "texture": "tiled-perso-allside3.png",
+    "regionWidth": 218,
+    "regionHeight": 169
+  },
+  "cycles": {
+    "red_Left_idle": {
+      "frames": [2,3],
+      "isLooping": false,
+      "frameDuration": 0.2
+    },
+    "blue_Left_idle": {
+      "frames": [14,15],
+      "isLooping": false,
+      "frameDuration": 0.2
+    },
+    "green_Left_idle": {
+      "frames": [26,27],
+      "isLooping": false,
+      "frameDuration": 0.2
+    },
+    "yellow_Left_idle": {
+      "frames": [38,39],
+      "isLooping": false,
+      "frameDuration": 0.2
+    },
+    "red_Right_idle": {
+      "frames": [8,9],
+      "isLooping": false,
+      "frameDuration": 0.2
+    },
+    "blue_Right_idle": {
+      "frames": [20,21],
+      "isLooping": false,
+      "frameDuration": 0.2
+    },
+    "green_Right_idle": {
+      "frames": [32,33],
+      "isLooping": false,
+      "frameDuration": 0.2
+    },
+    "yellow_Right_idle": {
+      "frames": [44,45],
+      "isLooping": false,
+      "frameDuration": 0.2
+    },
+    "red_Left_walk": {
+      "frames": [0,1,2,3,4,5],
+      "isLooping": false,
+      "frameDuration": 0.2
+    },
+    "red_Right_walk": {
+      "frames": [6,7,8,9,10,11],
+      "isLooping": false,
+      "frameDuration": 0.2
+    },
+    "blue_Left_walk": {
+      "frames": [12,13,14,15,16,17],
+      "isLooping": false,
+      "frameDuration": 0.2
+    },
+    "blue_Right_walk": {
+      "frames": [18,19,20,21,22,23],
+      "isLooping": false,
+      "frameDuration": 0.2
+    },
+    "green_Left_walk": {
+      "frames": [24,25,26,27,28,29],
+      "isLooping": false,
+      "frameDuration": 0.2
+    },
+    "green_Right_walk": {
+      "frames": [30,31,32,33,34,35],
+      "isLooping": false,
+      "frameDuration": 0.2
+    },
+    "yellow_Left_walk": {
+      "frames": [36,37,38,39,40,41],
+      "isLooping": false,
+      "frameDuration": 0.2
+    },
+    "yellow_Right_walk": {
+      "frames": [42,43,44,45,46,47],
+      "isLooping": false,
+      "frameDuration": 0.2
+    }
+  }
+}

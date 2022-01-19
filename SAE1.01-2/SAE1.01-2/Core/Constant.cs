@@ -1,10 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SAE1._01_2
+﻿namespace SAE1._01_2
 {
 
     public class Constant
