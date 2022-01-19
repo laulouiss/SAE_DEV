@@ -28,5 +28,12 @@
       <FileName>Core\Player.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="SAE1._01_2.FuryFlash">
+    <Position X="3.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IIQAAAAAAAAAIwAAEAIAIAAAABBAAAACQIQAACgAAAQ=</HashCode>
+      <FileName>FuryFlash.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

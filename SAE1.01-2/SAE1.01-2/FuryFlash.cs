@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using MonoGame.Extended.Content;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Sprites;
@@ -19,48 +21,9 @@ namespace SAE1._01_2
         private Vector2 _camPosition;
         private Vector2 velocity;
         private Texture2D _bg;
-        private int _vitessePerso;
         private bool hasJumped;
-
-
-        public SpriteBatch SpriteBatch
-        {
-            get
-            {
-                return this._spriteBatch;
-            }
-
-            set
-            {
-                this._spriteBatch = value;
-            }
-        }
-
-        public AnimatedSprite Perso
-        {
-            get
-            {
-                return this._perso;
-            }
-
-            set
-            {
-                this._perso = value;
-            }
-        }
-
-        public Vector2 PersoPosition
-        {
-            get
-            {
-                return this._persoPosition;
-            }
-
-            set
-            {
-                this._persoPosition = value;
-            }
-        }
+        private Song _song;
+        private SoundEffect _jumpEffect;
 
         public FuryFlash()
         {
@@ -90,16 +53,19 @@ namespace SAE1._01_2
             _bg = Content.Load<Texture2D>("background/bg2");
             SpriteSheet spriteSheet = Content.Load<SpriteSheet>("perso/tiled-perso-allside.sf", new JsonContentLoader());
             _perso = new AnimatedSprite(spriteSheet);
+            _jumpEffect = Content.Load<SoundEffect>("Sound/jump");
+            _song = Content.Load<Song>("Sound/powerup");
+            MediaPlayer.Play(_song);
             // TODO: use this.Content to load your game content here
         }
 
         protected override void Update(GameTime gameTime)
         {
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             string animation = $"{ChoixPerso.CouleurPerso}_{ChoixPerso.ChoixDirection(ChoixPerso.direction)}_idle";
             float deltaSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds; // DeltaTime
-            float walkSpeed = deltaSeconds * _vitessePerso; // Vitesse de déplacement du sprite
             KeyboardState kState = Keyboard.GetState();
 
             _persoPosition += velocity;
@@ -123,6 +89,7 @@ namespace SAE1._01_2
             {
                 _persoPosition.Y -= 20f;
                 velocity.Y = -30f;
+                _jumpEffect.Play();
                 hasJumped = true;
             }
             if (hasJumped == true)
